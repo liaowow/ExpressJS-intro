@@ -27,5 +27,12 @@ app.listen(PORT, () => {
 });
 ```
 
+## Routes
+
+### Writing a Route
+
+To tell our server how to deal with any given request, we register a series of *routes*. Routes define the control flow for requests based on the request’s path and HTTP verb.
+
+
 
 
