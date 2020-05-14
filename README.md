@@ -61,3 +61,10 @@ app.get('/monsters', (req, res, next) => {
 - the `res.send()` method will send back an array of spooky monsters.
 
 In addition to `.send()`, `.json()` can be used to explicitly send JSON-formatted responses.
+
+### Matching Route Paths
+
+Express tries to match requests by route, meaning that if we send a request to `<server address>:<port number>/api-endpoint`, the Express server will search through any registered routes in order and try to match `/api-endpoint`.
+
+Express searches through routes in the order that they are registered in your code. The first one that is matched will be used, and its callback will be called.
+
