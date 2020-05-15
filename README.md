@@ -68,3 +68,43 @@ Express tries to match requests by route, meaning that if we send a request to `
 
 Express searches through routes in the order that they are registered in your code. The first one that is matched will be used, and its callback will be called.
 
+### Route Parameters
+
+Parameters are route path segments that begin with `:` in their Express route definitions. They act as wildcards, matching any text at that path segment. For example `/monsters/:id` will match both `/monsters/1` and `/monsters/45`.
+
+Express parses any parameters, extracts their actual values, and attaches them as an object to the request object: `req.params`. This object’s keys are any parameter names in the route, and each key’s value is the actual value of that field per request.
+
+```js
+const monsters = { hydra: { height: 3, age: 4 }, dragon: { height: 200, age: 350 } };
+// GET /monsters/hydra
+app.get('/monsters/:name', (req, res, next) => {
+  console.log(req.params) // { name: 'hydra' };
+  res.send(monsters[req.params.name]);
+});
+```
+- A `.get()` route is defined to match `/monsters/:name` path.
+- When a GET request arrives for `/monsters/hydra`, the callback is called.
+- Inside the callback, `req.params` is an object with the key name and the value hydra, which was present in the actual request path.
+- The appropriate monster is retrieved by its name from the monsters object and sent back to the client.
+
+### Setting Status Codes
+
+Response codes provide information to clients about how their requests were handled. For example, any `res.send()` has by default sent a 200 OK status code.
+
+The res object has a `.status()` method to allow us to set the status code, and other methods like `.send()` can be chained from it.
+```js
+const monsterStoreInventory = { fenrirs: 4, banshees: 1, jerseyDevils: 4, krakens: 3 };
+app.get('/monsters-inventory/:name', (req, res, next) => {
+  const monsterInventory = monsterStoreInventory[req.params.name];
+  if (monsterInventory) {
+    res.send(monsterInventory);
+  } else {
+    res.status(404).send('Monster not found');
+  }
+});
+```
+- Here, we've implemented a route to retrieve inventory levels from a Monster Store.
+- Inventory levels are kept in the `monsterStoreInventory` variable. 
+- When a request arrives for `/monsters-inventory/mothMen`, the route matches and so the callback is invoked.
+- `req.params.name` will be equal to 'mothMen' and so our program accesses `monsterStoreInventory['mothMen']`.
+- Since there are no `mothMen` in our inventory, `res.status()` sets a 404 status code on the response, and `.send()` sends the response.
