@@ -144,3 +144,7 @@ When updating, many servers will send back the updated resource after the update
 `POST` is the HTTP method verb used for creating new resources. Because `POST` routes create new data, their paths do not end with a route parameter, but instead end with the type of resource to be created.
 
 Express uses `.post()` as its method for POST requests. 
+
+`DELETE` is the HTTP method verb used to delete resources. Because `DELETE` routes delete currently existing data, their paths should usually end with a route parameter to indicate which resource to delete.
+
+Express uses `.delete()` as its method for DELETE requests. Servers often send a 204 No Content status code if deletion occurs without error.
