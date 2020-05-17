@@ -29,7 +29,9 @@ app.get('/expressions/:id', (req, res, next) => {
 
 app.put('/expressions/:id', (req, res, next) => {
   const expressionIndex = getIndexById(req.params.id, expressions);
+  // getIndexById will return -1 if the expressions array doesn’t contain an element with that id
   if (expressionIndex !== -1) {
+    // updateElement will throw an error if you pass in an id that doesn’t exist in the array
     updateElement(req.params.id, req.query, expressions);
     res.send(expressions[expressionIndex]);
   } else {
