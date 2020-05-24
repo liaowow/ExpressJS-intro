@@ -194,3 +194,28 @@ monstersRouter.get('/:id', (req, res, next) => {
 - Express’ route-matching algorithm enters the `monstersRouter`‘s routes to search for full path matches. 
 - Since `monstersRouter.get('/:id')` is mounted at `/monsters`, the two paths together match the entire request path (`/monsters/1`), so the route matches and the callback is invoked. 
 - The `'godzilla'` monster is fetched from the monsters array and sent back.
+
+### Middleware
+
+Middleware is code that executes between a server receiving a request and sending a response. It operates on the boundary, so to speak, between those two HTTP actions.
+
+In Express, middleware is a function. Middleware can perform logic on the request and response objects, such as: 
+- inspecting a request, 
+- performing some logic based on the request, 
+- attaching information to the response, 
+- attaching a status to the response, 
+- sending the response back to the user, or 
+- simply passing the request and response to another middleware.
+
+```js
+app.use((req, res, next) => {
+  console.log('Request received');
+});
+```
+- `app.use()` takes a callback function that it will call for every received request.
+- Every time the server receives a request, it will find the first registered middleware function and call it.
+- The server will find the callback function specified above, call it, and print out 'Request received'.
+
+To quote the Express documentation:
+`An Express application is essentially a series of middleware function calls.`
+
