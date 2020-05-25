@@ -219,3 +219,10 @@ app.use((req, res, next) => {
 To quote the Express documentation:
 `An Express application is essentially a series of middleware function calls.`
 
+#### next()
+
+The middleware stack is processed in the order they appear in the application file, such that middleware defined later happens after middleware defined before. It’s important to note that this is regardless of method — an `app.use()` that occurs after an `app.get()` will get called after the `app.get()`.
+
+An Express middleware is a function with three parameters: `(req, res, next)`. The sequence is expressed by a set of callback functions invoked progressively after each middleware performs its purpose. 
+
+The third argument to a middleware function, `next`, should get explicitly called as the last part of the middleware’s body. This will hand off the processing of the request and the construction of the response to the next middleware in the stack.
