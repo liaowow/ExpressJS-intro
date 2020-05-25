@@ -226,3 +226,41 @@ The middleware stack is processed in the order they appear in the application fi
 An Express middleware is a function with three parameters: `(req, res, next)`. The sequence is expressed by a set of callback functions invoked progressively after each middleware performs its purpose. 
 
 The third argument to a middleware function, `next`, should get explicitly called as the last part of the middleware’s body. This will hand off the processing of the request and the construction of the response to the next middleware in the stack.
+
+#### Route-Level app.use() - Single Path
+
+This is the `app.use()` function signature:
+`app.use([path,] callback [, callback...])`
+
+In documentation for many programming languages, optional arguments for functions are placed in square brackets (`[]`). This means that `app.use()` takes an optional path parameter as its first argument. 
+
+#### Control Flow With next()
+
+```js
+app.use('/beans/:beanName', (req, res, next) => {
+  const beanName = req.params.beanName;
+  if (!jellybeanBag[beanName]) {
+    res.status(404).send('Bean with that name does not exist');
+    return console.log('Response Sent');
+  }
+  req.bean = jellybeanBag[beanName];
+  req.beanName = beanName;
+  next();
+});
+```
+
+`next` is called at the end of the middleware callback function. This placement ensures that if a bean does not exist, the proper error status is sent, but if it does exist, we attach it to the request object and proceed to the next matching route/middleware to complete the request-response cycle.
+
+#### Open-Source Middleware: Logging
+
+In the workspace you’ll see what code looks like using unnecessary custom solutions and lots of lines calling `console.log()`. It’s not bad code, but it introduces complexity that could be avoided. Time spent thinking about and writing code that accomplishes common tasks is time that could be better spent on thinking about and writing code that is unique to your application.
+
+We will replace the logging code in the workspace with `morgan`, an open-source library for logging information about the HTTP request-response cycle in a server application.
+
+`morgan()` is a function that will return a middleware function, to reiterate: the return value of `morgan()` will be a function, that function will have the function signature `(req, res, next)` that can be inserted into an `app.use()`, and that function will be called before all following middleware functions.
+
+Morgan takes an argument to describe the formatting of the logging output. For example, `morgan('tiny')` will return a middleware function that does a “tiny” amount of logging.
+
+With morgan in place, we’ll be able to remove the existing logging code. 
+
+Resource: [Morgan GitHub](https://github.com/expressjs/morgan)
