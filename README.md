@@ -264,3 +264,17 @@ Morgan takes an argument to describe the formatting of the logging output. For e
 With morgan in place, we’ll be able to remove the existing logging code. 
 
 Resource: [Morgan GitHub](https://github.com/expressjs/morgan)
+
+#### Error-Handling Middleware
+
+Error handling middleware needs to be the last `app.use()` in your file. If an error happens in any of our routes, we want to make sure it gets passed to our error handler. 
+
+The middleware stack progresses through routes as they are presented in a file, therefore the error handler should sit at the bottom of the file. 
+
+```js
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
+- `err` represents the error object, and we can use it to investigate the error and perform different tasks depending on what kind of error was thrown. For now, we only want to send an HTTP 500 status response to the user.
