@@ -1,8 +1,13 @@
+# Table of Contents
+- [Starting a Server](#starting-server)
+- [Routes](#routes)
+- [Middleware](#middleware)
+
 # Overview
 
 Express is a powerful but flexible Javascript framework for creating web servers and APIs. It can be used for everything from simple static file servers to JSON APIs to full production servers.
 
-## Starting a Server
+## <a name="starting-server"></a>Starting a Server
 
 To create a server, the imported express function must be invoked.
 ```js
@@ -195,7 +200,7 @@ monstersRouter.get('/:id', (req, res, next) => {
 - Since `monstersRouter.get('/:id')` is mounted at `/monsters`, the two paths together match the entire request path (`/monsters/1`), so the route matches and the callback is invoked. 
 - The `'godzilla'` monster is fetched from the monsters array and sent back.
 
-### Middleware
+## Middleware
 
 Middleware is code that executes between a server receiving a request and sending a response. It operates on the boundary, so to speak, between those two HTTP actions.
 
