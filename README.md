@@ -204,7 +204,7 @@ monstersRouter.get('/:id', (req, res, next) => {
 
 Middleware is code that executes between a server receiving a request and sending a response. It operates on the boundary, so to speak, between those two HTTP actions.
 
-In Express, middleware is a function. Middleware can perform logic on the request and response objects, such as: 
+In Express, middleware is a **function**. Middleware can perform logic on the request and response objects, such as: 
 - inspecting a request, 
 - performing some logic based on the request, 
 - attaching information to the response, 
@@ -258,7 +258,9 @@ app.use('/beans/:beanName', (req, res, next) => {
 
 #### Open-Source Middleware: Logging
 
-In the workspace you’ll see what code looks like using unnecessary custom solutions and lots of lines calling `console.log()`. It’s not bad code, but it introduces complexity that could be avoided. Time spent thinking about and writing code that accomplishes common tasks is time that could be better spent on thinking about and writing code that is unique to your application.
+In the workspace you’ll see what code looks like using unnecessary custom solutions and lots of lines calling `console.log()`. It’s not bad code, but it introduces complexity that could be avoided. 
+
+Time spent thinking about and writing code that accomplishes common tasks is time that could be better spent on thinking about and writing code that is unique to your application.
 
 We will replace the logging code in the workspace with `morgan`, an open-source library for logging information about the HTTP request-response cycle in a server application.
 
